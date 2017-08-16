@@ -1,0 +1,19 @@
+{
+  "name": "dnd-tree",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "darren z m lin",
+  "license": "ISC",
+  "dependencies": {
+    "mockjs": "^1.0.1-beta3"
+  },
+  "devDependencies": {
+    "connect": "^3.6.3",
+    "raphael": "^2.2.7",
+    "serve-static": "^1.12.4"
+  }
+}
