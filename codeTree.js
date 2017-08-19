@@ -58,12 +58,12 @@ CodeTree.prototype.createNodes = function(row){
 	}
 	function find(v,parentChildren){
 		var i;
+		var result = null;
 		for(i=0;i<parentChildren.length;i++){
 			if(parentChildren[i].data===v)
-				return parentChildren[i];
-			else
-				return null;
+				result = parentChildren[i];
 		}
+		return result;
 	}
 	return this.root;
 }

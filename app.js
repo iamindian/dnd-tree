@@ -29,6 +29,11 @@ row = {"1":1,"2":22,"3":3,"4":4};
 root = codeTree.createNodes(row);
 row = {"1":1,"2":2,"3":31,"4":4};
 root = codeTree.createNodes(row);
-debugger;
+row = {"1":1,"2":22,"3":31,"4":4};
+root = codeTree.createNodes(row);
 codeTree.render();
-process.exit(0);
+//console.log("count leaves: %s",codeTree.countLeaves() );
+/*if(process){
+	process.exit(0);
+}*/
+

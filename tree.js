@@ -10,7 +10,32 @@ Tree.prototype.getMaxDepth = function(){
 	this.dfs(visit);
 	return maxDepth;
 }
-Tree.prototype.dfs = function(visit){
+Tree.prototype.countLeaves = function(){
+	var total = 0;
+	function visit(treeNode){
+		total++;
+	}
+	this.traverseLeaves(visit.bind(this));
+	return total;
+}
+Tree.prototype.traverseBranch= function(visit){
+	
+	function traverseBranch(treeNode){
+		if(treeNode.children.length)
+			visit(treeNode);
+	}
+	this.bfs(traverseBranch.bind(this));
+}
+Tree.prototype.traverseLeaves = function(visit){
+	
+	function traverseLeaves(treeNode){
+		if(!treeNode.children.length)
+			visit(treeNode);
+	}
+	this.bfs(traverseLeaves.bind(this));
+}
+Tree.prototype.dfs = function(visit,treeNode){
+	
 	function dfs(treeNode){
 		var index;
 		var length = treeNode.children.length;
@@ -23,25 +48,34 @@ Tree.prototype.dfs = function(visit){
 				dfs(children[index]);	
 			}
 		}
-	
 	}
-	dfs(this.root);	
+	if(!treeNode){
+		dfs(this.root);
+	}else{
+		dfs(treeNode);
+	}
+
 }
-Tree.prototype.bfs = function(visit){
+Tree.prototype.bfs = function(visit,treeNode){
 	var pointer=0, nodes = [], children;
-	
-	if(!this.root){
-		return;
+	if(treeNode){
+		nodes.push(treeNode);
+	}else{
+		if(!this.root){
+			return;
+		}else{
+			nodes.push(this.root);
+		}
 	}
-	nodes.push(this.root);
 	while(pointer<nodes.length){
-		visit(nodes[pointer]);
+		if(visit(nodes[pointer])) return;
 		children = null;
 		children = nodes[pointer].children;
 		if(children)
 			nodes = nodes.concat(children);
 		pointer++;
 	}
+
 
 }
 module.exports = Tree;
