@@ -3,7 +3,16 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-
+  <style>
+	.group:after {
+  		content: "";
+  		display: table;
+  		clear: both;
+	}
+	body{
+		margin:0px;
+	}
+  </style>
   <title>Drag and Drop Mind Map</title>
   <meta name="description" content="A mind map with drag and drop feature">
   <meta name="author" content="Darren Z M LIN">
@@ -15,7 +24,11 @@
   <![endif]-->
 </head>
 
-<body>
+<body id="container" style="position:relative" class="group">
+	<div style="position:absolute;float:left;top:0px;left:0px;width:500px;height:500px;" id="1"></div>
+	<div style="position:absolute;float:left;top:0px;left:550px;width:500px;height:500px;" id="2"></div>
+	<!-- <div id="1"></div>
+	<div id="2"></div> -->
 <script src="bundle.js"></script>
 </body>
 </html>

@@ -10,29 +10,55 @@ Tree.prototype.getMaxDepth = function(){
 	this.dfs(visit);
 	return maxDepth;
 }
-Tree.prototype.countLeaves = function(){
+Tree.prototype.countLeaves = function(treeNode){
 	var total = 0;
 	function visit(treeNode){
 		total++;
 	}
-	this.traverseLeaves(visit.bind(this));
+	if(!treeNode){
+		this.dfsLeaves(visit.bind(this),this.root);
+	}else{
+		this.dfsLeaves(visit.bind(this),treeNode);
+	}
 	return total;
 }
-Tree.prototype.traverseBranch= function(visit){
+Tree.prototype.traverseBranch= function(visit,treeNode){
 	
 	function traverseBranch(treeNode){
 		if(treeNode.children.length)
 			visit(treeNode);
 	}
-	this.bfs(traverseBranch.bind(this));
+	if(!treeNode){
+		this.bfs(traverseBranch.bind(this),this.root);
+	}else{
+		this.bfs(traverseBranch.bind(this),treeNode);
+	}
+	
 }
-Tree.prototype.traverseLeaves = function(visit){
+Tree.prototype.bfsLeaves = function(visit,treeNode){
 	
 	function traverseLeaves(treeNode){
 		if(!treeNode.children.length)
 			visit(treeNode);
 	}
-	this.bfs(traverseLeaves.bind(this));
+	
+	if(!treeNode){
+		this.bfs(traverseLeaves.bind(this),this.root);
+	}else{
+		this.bfs(traverseLeaves.bind(this),treeNode);
+	}
+}
+Tree.prototype.dfsLeaves = function(visit,treeNode){
+	function traverseLeaves(treeNode){
+		if(!treeNode.children.length)
+			visit(treeNode);
+	}
+	
+	if(!treeNode){
+		this.dfs(traverseLeaves.bind(this),this.root);
+	}else{
+		this.dfs(traverseLeaves.bind(this),treeNode);
+	}
 }
 Tree.prototype.dfs = function(visit,treeNode){
 	

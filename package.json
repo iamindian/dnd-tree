@@ -9,7 +9,8 @@
   "author": "darren z m lin",
   "license": "ISC",
   "dependencies": {
-    "mockjs": "^1.0.1-beta3"
+    "mockjs": "^1.0.1-beta3",
+    "raphael-zoom": "0.0.4-npm-1"
   },
   "devDependencies": {
     "connect": "^3.6.3",

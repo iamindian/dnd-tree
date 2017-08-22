@@ -1,8 +1,11 @@
 var CodeTreeNode = require("./codeTreeNode.js");
 var RenderTree = require("./renderTree.js");
-function CodeTree(rows){
+function CodeTree(options){
 	this.root = null;
-	RenderTree.call(this,this.root);
+	if(!options)
+		RenderTree.call(this,this.root);
+	else
+		RenderTree.call(this,this.root,options);
 }
 CodeTree.prototype = new RenderTree();
 CodeTree.prototype.constructor = CodeTree;
@@ -67,6 +70,61 @@ CodeTree.prototype.createNodes = function(row){
 	}
 	return this.root;
 }
+CodeTree.prototype.getParentsAsRow = function(treeNode){
+	if(!treeNode)
+		return;
+	var row = [];
+	row.push(treeNode.data);
+	var current = treeNode.parent;
+	while(current){
+		row.push(current.data);
+		current = current.parent;
+	}
+	return row.reverse();
+}
+CodeTree.prototype.getRows = function(treeNode){
+	var rows = [];
+	function leaf(treeNode){
+		var row = [];
+		var current = treeNode;
+		while(current){
+			row.push(current.data);
+			current = current.parent;
+		}
+		rows.push(row.reverse());
+	};
+	if(!treeNode){
+		this.dfsLeaves(leaf.bind(this),this.root);
+	}else{
+		this.dfsLeaves(leaf.bind(this),treeNode);
+	}
+	return rows;
+	
+}
+CodeTree.prototype.getChildrenAsRows = function(treeNode){
+	var rows = [];
+	function leaf(leaf){
+		var row = [];
+		var current = leaf;
+		while(true){
+			if(current===treeNode){
+				row.push(current.data);
+				break;
+			}else{
+				row.push(current.data);
+			}
+			current = current.parent;
+		}
+		rows.push(row.reverse());
+	}
+	if(!treeNode){
+		return;
+	}else{
+		this.dfsLeaves(leaf.bind(this),treeNode);
+	}
+	return rows;
+}
+
 module.exports = CodeTree;
 
 
