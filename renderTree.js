@@ -7,9 +7,9 @@ function RenderTree(root,options){
 		this.root = root;
 		var elements = [];
 		var optionTemplate = {}
-			optionTemplate.distance = {x:50,y:50};
+			optionTemplate.distance = {x:100,y:100};
 			optionTemplate.pos = {x:20,y:0,w:600,h:600};
-			optionTemplate.r = 15;
+			optionTemplate.r = 20;
 			optionTemplate.background = "#005500";
 			//optionTemplate.rectangler = {width:100,height:100};
 		if(!options){
@@ -28,6 +28,7 @@ RenderTree.prototype.render = function(paint,connect){
 				if(this.options.id){
 					this.paper = new Raphael(document.getElementById(this.options.id),this.options.pos.w,this.options.pos.h);
 					this.paper.canvas.style.backgroundColor = this.options.background;
+					//this.paper.canvas.style.pointerEvents="none";
 					//this.paper.initZoom();
 				}
 				else{
