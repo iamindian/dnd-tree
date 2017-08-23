@@ -7,10 +7,13 @@ function RenderTree(root,options){
 		this.root = root;
 		var elements = [];
 		var optionTemplate = {}
-			optionTemplate.distance = {x:100,y:100};
-			optionTemplate.pos = {x:20,y:0,w:600,h:600};
+			optionTemplate.distance = {x:120,y:50};
+			optionTemplate.pos = {x:20,y:0,w:700,h:700};
 			optionTemplate.r = 20;
 			optionTemplate.background = "#005500";
+			optionTemplate.rect = {
+				w:100,h:25
+			};
 			//optionTemplate.rectangler = {width:100,height:100};
 		if(!options){
 			this.options = optionTemplate;
@@ -91,10 +94,10 @@ RenderTree.prototype.calMinValue = function(){
 	
 	if(!leavesTotal){//单节点情况
 		this.minY = this.options.pos.h/2;
-		this.minX = this.options.pos.x + this.options.r;
+		this.minX = this.options.pos.x + this.options.rect.w/2;
 	}else{	//多节点情况
 		this.minY = this.options.pos.h/2 - this.options.distance.y * (leavesTotal-1)/2;
-		this.minX = this.options.pos.x + this.options.r;
+		this.minX = this.options.pos.x + this.options.rect.w/2;
 	}
 }
 RenderTree.prototype.paint = function(treeNode){
@@ -103,14 +106,20 @@ RenderTree.prototype.paint = function(treeNode){
 	var x = treeNode.pos.x;
 	var y = treeNode.pos.y;
 	var rNodeSet = this.paper.set();
-	var circle = this.paper.circle(0, 0, this.options.r);
+	var w = this.options.rect.w;
+	var h = this.options.rect.h;
+	var rect = this.paper.rect(-w/2,-h/2,w,h,10);
+	rect.attr("fill", "#ff3355");
+	rect.data("treeNode",treeNode);
+	rect.node.style = "cursor:grabbing;";
+	/*var circle = this.paper.circle(0, 0, this.options.r);
 	circle.attr("fill", "#ff3355");
 	circle.data("treeNode",treeNode);
-	circle.node.style = "cursor:grabbing;";
+	circle.node.style = "cursor:grabbing;";*/
 	var text = this.paper.text(0, 0, treeNode.data).attr({fill: '#000000'});
 	//text.data(this.elementTreeNodeMapper.length-1);//把在elementTreeNodeMapper中指向最近树节点的变量索引添加到raphael element的data属性
 	text.node.setAttribute("pointer-events","none");//不触发事件
-	rNodeSet.push(circle);
+	rNodeSet.push(rect);
 	rNodeSet.push(text);
 	rNodeSet.translate(x,y);
 	/*rNodeSet.drag(function move(dx,dy,x,y,e){
@@ -125,7 +134,7 @@ RenderTree.prototype.paint = function(treeNode){
 }
 RenderTree.prototype.connection = function(treeNode){
 	if(treeNode.parent){
-		var r = this.options.r;
+		var r = this.options.rect.w/2;
 		var ppos = treeNode.parent.pos;
 		var pos = treeNode.pos;
 		var pcos = {
@@ -139,6 +148,7 @@ RenderTree.prototype.connection = function(treeNode){
 		this.paper.line(pcos.x,pcos.y,cos.x,cos.y);
 	}
 }
+
 RenderTree.prototype.zoom = function(value){
 	
 }

@@ -20,7 +20,7 @@ tree.dfs(function(treeNode){
 	console.log(treeNode.data);
 });*/
 var context;
-var codeTree = new CodeTree({ id: 1, pos: { x: 20, y: 0, w: 500, h: 500 } });
+var codeTree = new CodeTree({ id: 1, pos: { x: 50, y: 0, w: 700, h: 1920 } });
 var row, root;
 row = { "1": "1", "2": "2", "3": "3", "4": "4" };
 codeTree.createNodes(row);
@@ -31,7 +31,7 @@ codeTree.createNodes(row);
 codeTree.render();
 
 
-var codeTree2 = new CodeTree({ id: 2, pos: { x: 20, y: 0, w: 500, h: 500 } });
+var codeTree2 = new CodeTree({ id: 2, pos: { x: 50, y: 0, w: 700, h: 1920 } });
 row = { "1": "1", "2": "2", "3": "3", "4": "4" };
 codeTree2.createNodes(row);
 row = { "1": "1", "2": "4", "3": "4", "4": "6" };
@@ -49,7 +49,7 @@ document.addEventListener("DOMContentLoaded",function() {
     context.id = "context";
     context.style.display = "none";
     context.style.position = "fixed";
-    context.innerHTML = "<ul style='list-style:none;margin:0px;padding:0px;font:10px;background-color:#00eeff'><li data-action='add'>add</li><li data-action='remove'>remove</li></ul>";
+    context.innerHTML = "<ul style='border-radius:5px;list-style:none;margin:0px;padding:0px;font:10px;background-color:#00eeff'><li data-action='add'>add</li><li data-action='remove'>remove</li></ul>";
     document.body.appendChild(context);
 
     container.addEventListener("mousedown", function(e) {
@@ -59,14 +59,14 @@ document.addEventListener("DOMContentLoaded",function() {
         if (!element)
             return;
         //console.log(element);
-        if (element.tagName === "circle") {
+        if (element.tagName === "rect") {
             from = element;
         }
     });
 
     container.addEventListener("dblclick", function(e) {
         var element = document.elementFromPoint(e.clientX, e.clientY);
-        if(element.tagName!=="circle")
+        if(element.tagName!=="rect")
         	return;
         var id = element.raphaelid;
         console.log("raphael id: %s", id);
@@ -115,7 +115,7 @@ document.addEventListener("DOMContentLoaded",function() {
         if (!element)
             return;
         //console.log(element);
-        if (element.tagName === "circle") {
+        if (element.tagName === "rect") {
             to = element;
         }
         if (!to || !from) {
@@ -158,7 +158,7 @@ document.addEventListener("DOMContentLoaded",function() {
         var target, relatedTarget;
         target = e.target;
         relatedTarget = e.relatedTarget;
-        if (target.tagName === "circle") {
+        if (target.tagName === "rect") {
             clearTimeout(timer);
             var element = document.elementFromPoint(e.clientX, e.clientY);
             var rect = element.getBoundingClientRect();
@@ -189,7 +189,7 @@ document.addEventListener("DOMContentLoaded",function() {
         var target, relatedTarget;
         target = e.target;
         relatedTarget = e.relatedTarget;
-        if (target.tagName === "circle") {
+        if (target.tagName === "rect") {
             clearTimeout(timer);
             timer = setTimeout(hideContext, 500);
 
