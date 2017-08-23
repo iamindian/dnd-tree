@@ -20,7 +20,10 @@ TreeNode.prototype.addChild = function(data){
 	return node;
 }
 TreeNode.prototype.remove = function(){
+
 	var parent = this.parent;
+	if(!parent)
+		return;
 	var i = 0;
 	var children = parent.children;
 	var cLength = children.length;

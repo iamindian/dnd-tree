@@ -164,7 +164,7 @@ window.onload = function() {
         relatedTarget = e.relatedTarget;
         if (target.tagName === "circle") {
             clearTimeout(timer);
-            timer = setTimeout(hideContext, 1000);
+            timer = setTimeout(hideContext, 500);
 
         }
     }
@@ -175,7 +175,7 @@ window.onload = function() {
         relatedTarget = e.relatedTarget;
         if (target.closest("#context")) {
             clearTimeout(timer);
-            timer = setTimeout(hideContext, 1000);
+            timer = setTimeout(hideContext, 500);
 
         }
     }
