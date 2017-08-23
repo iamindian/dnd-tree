@@ -42,13 +42,14 @@ var container = document.getElementById("container");
 var from, to;
 var timer;
 
-window.onload = function() {
+document.addEventListener("DOMContentLoaded",function() {
 
     context = document.createElement("div");
+    context.dataset.id = "";
     context.id = "context";
     context.style.display = "none";
     context.style.position = "fixed";
-    context.innerHTML = "<ul style='list-style:none;margin:0px;padding:0px;font:10px;background-color:#00eeff'><li>add</li><li>update</li><li>remove</li></ul>";
+    context.innerHTML = "<ul style='list-style:none;margin:0px;padding:0px;font:10px;background-color:#00eeff'><li data-action='add'>add</li><li data-action='remove'>remove</li></ul>";
     document.body.appendChild(context);
 
     container.addEventListener("mousedown", function(e) {
@@ -65,6 +66,8 @@ window.onload = function() {
 
     container.addEventListener("dblclick", function(e) {
         var element = document.elementFromPoint(e.clientX, e.clientY);
+        if(element.tagName!=="circle")
+        	return;
         var id = element.raphaelid;
         console.log("raphael id: %s", id);
         var treeNode = codeTree.paper.getById(id).data("treeNode");
@@ -76,13 +79,36 @@ window.onload = function() {
         codeTree.render();
 
     });
+    function contextClick(e){
+    	var target, relatedTarget;
+        target = e.target;
+        relatedTarget = e.relatedTarget;
+    	var context = e.target.closest("#context");
+    	if(!context)
+    		return;
+    	
+        var id = context.dataset.id;
+        console.log("raphael id: %s",id);
+        var treeNode = codeTree.paper.getById(id).data("treeNode");
+        //console.dir(treeNode);
+        var action = target.dataset.action;
+        switch(action){
+        	case "add":
+        		var value = prompt("please enter a new value");
+        		if(value)
+        			treeNode.addChild(value);
+        		codeTree.render();
+        	break;
+        	case "remove":
+        		treeNode.remove();
+        		console.dir(codeTree.root);
+        		codeTree.render();
+        	break;
+        }
+        hideContext();
 
-    container.addEventListener("click", function(e) {
-        /*console.log(e);
-        e.preventDefault();
-        e.stopPropagation();
-        return false;*/
-    });
+    }
+    container.addEventListener("click", contextClick.bind(this));
     container.addEventListener("mouseup", function(e) {
         to = null;
         var element = document.elementFromPoint(e.clientX, e.clientY);
@@ -106,7 +132,7 @@ window.onload = function() {
         var toTreeNode = codeTree.paper.getById(to.raphaelid).data("treeNode");
         var fromTreeNode = codeTree2.paper.getById(from.raphaelid).data("treeNode");
         //console.log(codeTree.getParentsAsRow(toTreeNode));
-        console.log(codeTree2.getChildrenAsRows(fromTreeNode));
+        //console.log(codeTree2.getChildrenAsRows(fromTreeNode));
         var parentRow = codeTree.getParentsAsRow(toTreeNode);
         var childrenRows = codeTree2.getChildrenAsRows(fromTreeNode);
         var i = 0;
@@ -115,7 +141,7 @@ window.onload = function() {
             paths.push(parentRow.concat(childrenRows[i]));
             i++;
         }
-        console.dir(paths);
+        //console.dir(paths);
         i = 0;
         while (i < paths.length) {
             codeTree.createNodes(paths[i]);
@@ -141,7 +167,8 @@ window.onload = function() {
             context.style.top = rect.top + "px";
             context.style.left = rect.right + "px";
             context.style.display = "block";
-            console.dir(target);
+            context.dataset.id = target.raphaelid;
+            //console.dir(target);
         }
 
     }
@@ -186,7 +213,7 @@ window.onload = function() {
         context.style.display = "none";
     }
 
-}
+});
 
 //document.addEventListener('contextmenu', event => event.preventDefault());
 //console.dir(codeTree.paper);

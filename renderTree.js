@@ -51,40 +51,7 @@ RenderTree.prototype.render = function(paint,connect){
 				index++;
 			}
 			this.dfsLeaves(computeLeaf.bind(this));
-			function computeBranchsFromLeaf(leaf){
-				var current = leaf.parent;
-				var children,cLength,firstChild,lastChild;
-				var childrenHeight;
-				while(current){
-					children = current.children;
-					cLength = children.length;
-					firstChild = null;
-					lastChild = null;
-				 	if(cLength===1){ //只有一个子节点时
-				 		current.pos.y = children[0].pos.y;
-				 		current.pos.x = this.minX + current.depth * distanceX;
-				 	}else{ //有多个子节点时
-				 		firstChild = children[0];
-				 		lastChild = children[children.length-1];
-
-				 		current.pos.y = firstChild.pos.y + (lastChild.pos.y - firstChild.pos.y)/2;//基于第一个子节点的位置计算
-				 		current.pos.x = this.minX + current.depth * distanceX;
-				 	}
-				 	this.paint(current);
-				 	if(current.parent){
-						if(current.breadth!==current.parent.children.length-1) {//如果最近节点不是最后一个子节点
-							current = null;//不再计算父节 因为缺乏相邻节点的位置数据
-						}else{
-							current = current.parent;
-
-						}
-					}else{
-						current = null;
-					}
-				 	
-				 
-				} 
-			}
+			
 			function computeBranchsFromLeaf2(leaf){
 				var parent = leaf.parent,
 				firstChild = null,

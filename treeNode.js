@@ -1,10 +1,10 @@
 function TreeNode(data){
-	this.parent = null;
+	this.parent = null;//父节点
 	this.children = [];
-	this.depth = 0;	
-	this.breadth = 0;
-	this.data = data;
-	this.descendants = 0;
+	this.depth = 0;	//该节点在树中的层级
+	this.breadth = 0;//该节点在父节中子节点数组的索引
+	this.data = data;//节点中储存的数据
+	this.descendants = 0;//该节点所有的子孙后代节点的总数
 }
 TreeNode.prototype.addChild = function(data){
 	var node = new this.constructor(data);
@@ -26,11 +26,18 @@ TreeNode.prototype.remove = function(){
 		return;
 	var i = 0;
 	var children = parent.children;
+	console.log(children);
 	var cLength = children.length;
 	for(i=0;i<cLength;i++){
 		if(children[i]===this){
-			parent.children = children.splice(i,1);
+			children.splice(i,1);
+			break;
 		}
 	}
+	for(;i<cLength;i++){
+		if(children[i])
+			children[i].breadth--;
+	}
+	//console.log(children);
 }
 module.exports = TreeNode;
