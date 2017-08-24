@@ -20,7 +20,7 @@ tree.dfs(function(treeNode){
 	console.log(treeNode.data);
 });*/
 var context;
-var codeTree = new CodeTree({ id: 1, pos: { x: 50, y: 0, w: 700, h: 1920 } });
+var codeTree = new CodeTree({ id: 1, pos: { x: 50, y: 0, w: 1024, h: 1024 } });
 var row, root;
 row = { "1": "1", "2": "2", "3": "3", "4": "4" };
 codeTree.createNodes(row);
@@ -31,7 +31,7 @@ codeTree.createNodes(row);
 codeTree.render();
 
 
-var codeTree2 = new CodeTree({ id: 2, pos: { x: 50, y: 0, w: 700, h: 1920 } });
+var codeTree2 = new CodeTree({ id: 2, pos: { x: 50, y: 0, w: 1024, h: 1024 } });
 row = { "1": "1", "2": "2", "3": "3", "4": "4" };
 codeTree2.createNodes(row);
 row = { "1": "1", "2": "4", "3": "4", "4": "6" };
